@@ -1,9 +1,10 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('product')
+@ApiTags('products')
+@Controller('products')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
@@ -14,21 +15,21 @@ export class ProductController {
 
   @Get()
   findAll() {
-    return this.productService.findAll();
+    return this.productService.findAll().populate('user');
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.productService.findOne(+id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.productsService.findOne(+id);
+  // }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-    return this.productService.update(+id, updateProductDto);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
+  //   return this.productsService.update(+id, updateProductDto);
+  // }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.productService.remove(+id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.productsService.remove(+id);
+  // }
 }
