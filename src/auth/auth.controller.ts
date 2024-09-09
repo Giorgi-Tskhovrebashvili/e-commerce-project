@@ -19,6 +19,7 @@ export class AuthController {
     description: 'Bad Request',
   })
   @HttpCode(HttpStatus.OK)
+    
   @Post('/sign-up')
   signUp(@Body() signUpDto: SignUpDto) {
     return this.authService.signUp(signUpDto);
