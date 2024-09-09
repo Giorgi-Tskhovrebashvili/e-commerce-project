@@ -18,13 +18,13 @@ export class AuthController {
     status: HttpStatus.BAD_REQUEST,
     description: 'Bad Request',
   })
-  @HttpCode(HttpStatus.OK)
-    
+  @HttpCode(HttpStatus.CREATED)
   @Post('/sign-up')
   signUp(@Body() signUpDto: SignUpDto) {
     return this.authService.signUp(signUpDto);
   }
 
+  @HttpCode(HttpStatus.OK)
   @Post('/sign-in')
   signIn(@Body() signInDto: SignInDto) {
     return this.authService.signIn(signInDto);
