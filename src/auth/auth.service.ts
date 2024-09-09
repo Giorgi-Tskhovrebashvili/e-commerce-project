@@ -30,13 +30,17 @@ export class AuthService {
   async signIn(signInDto: SignInDto): Promise<SignInPayload> {
     const { email, password } = signInDto;
     const user = await this.usersService.findOne(email);
-    const arePasswordsEqual = await bcrypt.compare(password, user.password);
+    if (!user) {
+      throw InvalidCredentials;
+    }
 
+    const arePasswordsEqual = await bcrypt.compare(password, user.password);
     if (!user || !arePasswordsEqual) {
       throw InvalidCredentials;
     }
 
-    const access_token = await this.jwtService.sign({ email });
+    const payload = { email: user.email, sub: user.id };
+    const access_token = this.jwtService.sign(payload);
 
     return { status: true, token: access_token };
   }
